@@ -9,20 +9,24 @@ Array-valued functions:
     Midpoint Method:         midpoint_method(...)
     Modified Euler's Method: modified_euler_method(...)
     RK4:                     rk4_method(...)
+                             rk4_method_m(...)
     
 Real-valued functions:
     Euler's Method:          euler(...)
     Midpoint Method:         midpoint(...)
     Modified Euler's Method: modified_euler(...)
     RK4:                     rk4(...)
-
+                             rk4_m(...)
 
 Each function has an argument list as follows:
     
     method(f, a, b, h, y0)
     
     f is a real-valued function f(t, y)
-        where y = y(t)
+        where y = y(t) unless it ends with _m, then it is a 
+        vector-valued function which accepts and returns a
+        numpy.ndarray
+        
     a is the initial value for t
     b is the final value for t
     h is the step size
@@ -312,58 +316,34 @@ def rk4(f, a, b, h, y0):
 ###########################################
 ################## Test ###################
 import matplotlib.pyplot as plt
-from math import exp
 
-# ODE: y' = f(t, y)
+# Example system where phase portrait is an ellipse
 def f(t, y):
     return array([
-        y[1],
-        y[0]*(1-y[3])+t,
-        y[3],
-        y[2]**2-y[1]*y[3]+t*(y[0]**2)      
-                  ])
-    #return exp(-t)
+            3*y[0] - 13*y[1],
+            5*y[0] +    y[1],
+        ])
+# Initial value
+y0 = array([
+        3,
+        5,
+     ])
 
-# Initial value y0
-y0 = array([1, 2, 3, 4])
-
-# Interval [a, b]
-a = 0.0
-b = 1
+# Time interval [a, b]
+a = 0
+b = 9
 
 # Step size h
 h = 0.01
 
 # Numerically solve IVP
-
 result = rk4_method_m(f, a, b, h, y0)
-print result
 y1 = result[:, 0]
-y2 = result[:, 2]
+y2 = result[:, 1]
 x = linspace(a, b, y1.shape[0])
 
-# label1 = 'Euler'
-# y_1 = euler_method(f, a, b, h, y0)
-# label2 = 'Mod. Euler'
-# y_2 = modified_euler_method(f, a, b, h, y0)
-# label3 = 'RK4'
-# y_3 = rk4_method(f, a, b, h, y0)
-# 
-# x = linspace(a, b, y_3.shape[0])
-# 
-# # Print final values for y(3)
-# print label1, y_1[y_1.shape[0]-1]
-# print label2, y_2[y_2.shape[0]-1]
-# print label3, y_3[y_3.shape[0]-1]
-# 
-# # Plot and show solution
-# plt.plot(x, y_1, label=label1, linestyle = '-')
-# plt.plot(x, y_2, label=label2, linestyle = '-')
-# plt.plot(x, y_3, label=label3, linestyle='-')
-
-plt.plot(x, y1)
-plt.plot(x, y2)
-
+plt.plot(y1, y2)
 plt.show()
+
 ################ End Test #################
 ###########################################
