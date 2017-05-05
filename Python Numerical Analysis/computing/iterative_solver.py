@@ -5,6 +5,12 @@ Created on May 2, 2017
 '''
 
 '''
+Python 3 recommended fix for cmp(a, b)
+'''
+def cmp(a, b):
+    return (a > b) - (a < b) 
+
+'''
 Using the bisection method:
 
 Solves the equation f(x) = 0 on [a, b] to given
@@ -136,5 +142,3 @@ def steffenson_method(f, p0, tol, maxIterations):
     
     return p_n2
 
-#p = steffenson_method(f, 0.5, 10**-14, 1000000)
-#print(p)
