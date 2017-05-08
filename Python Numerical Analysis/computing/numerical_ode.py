@@ -17,7 +17,7 @@ Real-valued functions:
     Midpoint Method:         midpoint(...)
     Modified Euler's Method: modified_euler(...)
 
-** There is no rk4(...) because rk4_m(...) works just fine **
+** There is no rk4(...) because rk4_m(...) works **
 
 Each function has an argument list as follows:
     
@@ -42,10 +42,41 @@ Therefore,
     
     y(t) = w[index]
     
-Each function that is just euler(...), midpoint(...), rk4(...) only 
-    returns the final value y(b) if solving on the interval [a, b]
+Each function that is just euler(...), midpoint(...), rk4_m(...) only 
+    returns the final value y(b) if solving on the interval [a, b].
 
-Example use with pyplot at bottom.
+Example use with pyplot:
+
+For scalar ODE just use scalars instead of numpy arrays
+
+def f(t, y):
+    return np.array([
+        y[0] + ... ,
+        y[0] + 2*y[1] + ... ,
+        ...
+        y[m-1] + ...
+    ])
+
+y0 = np.array([
+    1,
+    2,
+    ...
+    m
+])
+
+a = 0
+b = 1
+
+h = 0.01
+
+result = rk4_method_m(f, a, b, h, y0)
+y1 = result[:, 0]
+y2 = result[:, 1]
+...
+
+Then use pyplot to plot, if solving a scalar ODE, use
+linspace() to create t-array for plotting with length
+result.shape[0].
 
 @author: Evan Burton
 '''
@@ -68,12 +99,9 @@ def euler_method(f, a, b, h, y0):
     
     for i in range(1, n):
         
-        m1 = f(t, w[i-1])
+        m1 = h*f(t, w[i-1])
         
-        if m1 > 10**15:
-            w[i] = 10**15
-        else:
-            w[i] = w[i-1]+h*m1
+        w[i] = w[i-1] + m1
             
         #print w[i]
         t += h
@@ -94,12 +122,9 @@ def euler(f, a, b, h, y0):
     
     for i in range(1, n):
         
-        m1 = f(t, wi)
+        m1 = h*f(t, wi)
         
-        if m1 > 10**15:
-            wi = 10**15
-        else:
-            wi += h*m1
+        wi += m1
             
         t += h
     
@@ -122,11 +147,8 @@ def modified_euler_method(f, a, b, h, y0):
         wi = w[i-1]
         m1 = h*f(t, wi)
         m2 = h*f(t+h, wi+m1)
-        
-        if m1 > 10**15:
-            w[i] = 10**15
-        else:
-            w[i] = wi+(m1+m2)/2.0
+
+        w[i] = wi+(m1+m2)/2.0
             
         t += h
     
@@ -148,10 +170,7 @@ def modified_euler(f, a, b, h, y0):
         m1 = h*f(t, wi)
         m2 = h*f(t+h, wi+m1)
         
-        if m1 > 10**15:
-            wi = 10**15
-        else:
-            wi += (m1+m2)/2.0
+        wi += (m1+m2)/2.0
             
         t += h
     
@@ -177,10 +196,7 @@ def midpoint_method(f, a, b, h, y0):
         m1 = wi+h*f(t,wi)/2.0
         m2 = h*f(t + h/2.0, m1)
         
-        if m1 > 10**15:
-            w[i] = 10**15
-        else:
-            w[i] = wi + m2
+        w[i] = wi + m2
     
         t += h
     
@@ -202,10 +218,7 @@ def midpoint(f, a, b, h, y0):
         m1 = wi+h*f(t,wi)/2.0
         m2 = h*f(t + h/2.0, m1)
         
-        if m1 > 10**15:
-            wi = 10**15
-        else:
-            wi = wi + m2
+        wi = wi + m2
     
         t += h
     
@@ -237,15 +250,10 @@ def rk4_method(f, a, b, h, y0):
         k3 = h*f(t + h/2.0, wi+k2/2.0)
         k4 = h*f(t+h, wi+k3)
         
-        # Don't allow overflow
-        if k1 > 10**15:
-            w[i] = 10**15
-        else:
-            w[i] = wi+(k1+2*(k2+k3)+k4)/6.0
-    
-            #print w[i]
+        w[i] = wi+(k1+2*(k2+k3)+k4)/6.0
             
         t += h
+        
     return w
 
 '''
@@ -270,13 +278,13 @@ def rk4_method_m(f, a, b, h, y0):
     
     # Initialize solution vector
     wi = y_initial
-    result = zeros((n+1, y_initial.shape[0]))
+    result = zeros((n, y_initial.shape[0]))
     
     for j in range(wi.shape[0]):
         result[0, j] = wi[j]
     t = a
     
-    for i in range(1, n+1):
+    for i in range(1, n):
         
         # RK4 Scheme
         k1 = h*f(t, wi)
@@ -303,28 +311,25 @@ def rk4_m(f, a, b, h, y0):
     n = int( (b-a)/(h)) + 1
     
     if type(y0) is ndarray:
-        y_initial = y0
+        w = y0
     else:
-        y_initial = array([y0])
+        w = array([y0])
     
-    # Initialize solution vector
-    wi = y_initial
-    result = zeros((n+1, y_initial.shape[0]))
-    
-    for j in range(wi.shape[0]):
-        result[0, j] = wi[j]
     t = a
     
-    for i in range(1, n+1):
+    for i in range(1, n):
         
         # RK4 Scheme
-        k1 = h*f(t, wi)
-        k2 = h*f(t + h/2.0, wi+k1/2.0)
-        k3 = h*f(t + h/2.0, wi+k2/2.0)
-        k4 = h*f(t+h, wi+k3)
+        k1 = h*f(t, w)
+        k2 = h*f(t + h/2.0, w+k1/2.0)
+        k3 = h*f(t + h/2.0, w+k2/2.0)
+        k4 = h*f(t+h, w+k3)
         
-        wi = wi + (k1+2*(k2+k3)+k4)/6.0
+        w = w + (k1+2*(k2+k3)+k4)/6.0
 
         t += h
         
-    return wi
+    if w.shape[0] == 1:
+        return w[0]
+    
+    return w
