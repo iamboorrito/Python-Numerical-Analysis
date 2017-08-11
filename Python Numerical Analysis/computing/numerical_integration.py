@@ -9,21 +9,34 @@ from math import sqrt
 
 '''
 Trapezoid rule for one interval [a, b]
+
+Args: Continuous function f(x)
+      Interval [a, b]
+
 '''
-def trapezoid(f, a, b, h):
-    return 0.5*h(f(a) + f(b))
+def trapezoid(f, a, b):
+    return 0.5*(b-a)(f(a) + f(b))
 
 '''
 Simpson's rule for one interval [a, b]
+
+Args: Continuous function f(x)
+      Interval [a, b]
+
 '''
-def simpson(f, a, b, h):
-    return h*(f(a) + 4*f((a+b)/2) + f(b))/6
+def simpson(f, a, b):
+    return (b-a)*(f(a) + 4*f((a+b)/2) + f(b))/12.0
 
 '''
 Composite Trapezoid rule for n subintervals
+
+Args: Continuous function f(x)
+      Interval [a, b]
+      Number of subintervals = n
+
 '''
 def composite_trapezoid(f, a, b, n):
-    
+    # Had problems with python assigning h as int
     h = (b-a)/(0.0+n)
     
     S0 = f(a) + f(b)
@@ -38,7 +51,12 @@ def composite_trapezoid(f, a, b, n):
 '''
 Composite Simpson's rule for n subintervals. 
 
-Note, n should be even for effectiveness
+Args: Continuous function f(x)
+      Interval [a, b]
+      Number of subintervals = n
+
+Note, n should be even for effectiveness. There is no guarantee
+that composite Simpson's will give any accuracy with odd n.
 
 '''
 def composite_simpson(f, a, b, n):
@@ -74,6 +92,13 @@ def romberg_iteration(k, j, f, a, b):
         return R1 + (R2 - R1)/(4**(j-1)-1)
 
 '''
+
+Romberg Integration
+
+Args: Continuous function f(x)
+      Interval [a, b]
+      Romberg Table height = n
+
 Calculates up to R(n, n) with order of precision given
 by O(h**2n). Integrates f from a to b with n rows and columns.
 
@@ -109,7 +134,10 @@ def romberg_method(f, a, b, n):
     return table
 
 '''
-Returns an nxn table given the output of romberg_method.
+Returns an n x n table given the output of romberg_method.
+
+Args: Output from romberg_method(...)
+
 '''
 def create_romberg_table(romb_table):
     

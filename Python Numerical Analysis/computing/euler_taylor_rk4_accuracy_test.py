@@ -2,12 +2,28 @@
 Created on May 4, 2017
 
 @author: Evan Burton
+
+Test of accuracy of methods against specific Taylor method
+for the ODE y' = 2*y - exp(t).
+
+Euler's Method is as inaccurate as ever, Taylor's Method does adequately, 
+and RK4 is almost magically precise.
+
+Results:
+
+actual: 20.0855369231876677
+euler:  8.23692695015
+taylor: 19.5352957572
+rk4:    20.0831047735
+
+
 '''
-from computing.numerical_ode import euler_method, rk4_method
+from numerical_ode import euler_method, rk4_method
 from numpy import zeros, linspace
 import matplotlib.pyplot as plt
 from math import exp
 
+# This is Taylor's ODE method for the function 2*y - exp(t)
 def taylor(f, a, b, h, y0):
     
     n = int( (b-a)/h ) + 1

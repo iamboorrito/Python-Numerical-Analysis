@@ -5,11 +5,11 @@ Created on May 8, 2017
 '''
 
 from numpy import array
-from computing.numerical_ode import rk4_method_m
+from numerical_ode import rk4_method_m
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-# Lorenz Attractor
+# Lorentz Attractor
 def f(t, y):
     return array([
         10*(y[1] - y[0]),
