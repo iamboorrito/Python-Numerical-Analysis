@@ -68,10 +68,10 @@ def composite_simpson(f, a, b, n):
     S1 = 0
     S2 = 0
     
-    for i in range(1, n/2):
+    for i in range(1, int(n/2)):
         S1 += f(a+2*i*h)
         
-    for i in range(1, n/2+1):
+    for i in range(1, int(n/2)+1):
         S2 += f(a+(2*i-1)*h)
     
     return h*(S0 + 2*S1 + 4*S2)/3
