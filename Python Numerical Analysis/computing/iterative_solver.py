@@ -142,3 +142,9 @@ def steffenson_method(f, p0, tol, maxIterations):
     
     return p_n2
 
+from math import cos
+def f(x):
+    return x - 1/(1+cos(x))
+
+print("Helo")
+print(bisection_method(f, 0, 3.14159, 0.0000000001, 1000))

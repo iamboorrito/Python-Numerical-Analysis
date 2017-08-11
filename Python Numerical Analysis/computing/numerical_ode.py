@@ -47,7 +47,7 @@ Each function that is just euler(...), midpoint(...), rk4_m(...) only
 
 Example use with pyplot:
 
-For scalar ODE just use scalars instead of numpy arrays
+For y' = f(t, y) just use scalars instead of numpy arrays
 
 def f(t, y):
     return np.array([
