@@ -1,6 +1,6 @@
 # Python-Numerical-Analysis
 
-* This is a work in progress, so far Numerical ODEs has best support because that is what I found most interesting and relevant towards my coursework at the time *
+* This is a work in progress. So far Numerical ODEs is the most complete because that is what I found most interesting and relevant towards my coursework at the time *
 
 A simple collection of files (3 so far) which perform standard numerical algorithms such as 
 
@@ -11,22 +11,24 @@ A simple collection of files (3 so far) which perform standard numerical algorit
   - Numerical ODE Solvers
     * Euler, Modified Euler, Midpoint, RK4 and variants detailed below.
     
-    For ODEs, the functions are as follows:
+# For ODEs, the functions are as follows:
     
-    Implemented:
-Array-valued functions:
-    Euler's Method:          euler_method(...)
-    Midpoint Method:         midpoint_method(...)
-    Modified Euler's Method: modified_euler_method(...)
-    RK4:                     rk4_method(...)
+Implemented:
+ - Array-valued functions:
+    * Euler's Method:          euler_method(...)
+    * Midpoint Method:         midpoint_method(...)
+    * Modified Euler's Method: modified_euler_method(...)
+    * RK4:                     rk4_method(...)
                              rk4_method_m(...)
                              rk4_m(...)
     
-Real-valued functions:
-    Euler's Method:          euler(...)
-    Midpoint Method:         midpoint(...)
-    Modified Euler's Method: modified_euler(...)
-** There is no rk4(...) because rk4_m(...) is pretty much as fast **
+- Real-valued functions:
+    * Euler's Method:          euler(...)
+    * Midpoint Method:         midpoint(...)
+    * Modified Euler's Method: modified_euler(...)
+    
+** There is no rk4(...) yet, but rk4_m(...) should suffice **
+
 Each function has an argument list as follows:
     
     method(f, a, b, h, y0)
