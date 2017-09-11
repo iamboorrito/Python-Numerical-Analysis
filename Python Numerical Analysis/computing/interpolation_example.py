@@ -3,9 +3,10 @@ Created on Aug 11, 2017
 
 @author: evan
 '''
-from math import exp
+from math import exp, pow
 from interpolation import *
 from numerical_integration import composite_simpson
+from cmath import sin
 
 def f(x):
     return exp(x)*x - x**2
