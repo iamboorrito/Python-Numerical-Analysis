@@ -4,21 +4,21 @@ Created on May 8, 2017
 @author: Evan Burton
 '''
 
-from numpy import array
+import numpy as np
 from numerical_ode import rk4_method_m
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 # Lorentz Attractor
 def f(t, y):
-    return array([
+    return np.array([
         10*(y[1] - y[0]),
         y[0]*(24 - y[2]) - y[1],
         y[0]*y[1] - 8*y[2]/3.0
     ])
  
 # Initial value
-y_0 = array([
+y_0 = np.array([
         1,
         1,
         1

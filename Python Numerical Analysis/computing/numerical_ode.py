@@ -17,13 +17,11 @@ Real-valued functions:
     Midpoint Method:         midpoint(...)
     Modified Euler's Method: modified_euler(...)
 
-** There is no rk4(...) because rk4_m(...) works **
-
 Each function has an argument list as follows:
     
     method(f, a, b, h, y0)
     
-    f is a real-valued function f(t, y)
+    f is a python function f(t, y)
         where y = y(t) unless it ends with _m, then it is a 
         vector-valued function which accepts and returns a
         numpy.ndarray
@@ -34,49 +32,96 @@ Each function has an argument list as follows:
     y0 is the initial value y(a) = y0
     
 Each function that ends with FUNC_NAME_method returns a numpy array
-    w of size int( (b-a)/h + 1 ) where w[0] = y(a) and w[k] = y(a+kh). 
-    
-Therefore,
-    
-    index = int( (t-a)/h )
-    
-    y(t) = w[index]
+    w of size int( (b-a)/h + 1 ) where w[0] = y(a) and w[k] = y(a+k*h). 
     
 Each function that is just euler(...), midpoint(...), rk4_m(...) only 
     returns the final value y(b) if solving on the interval [a, b].
+    
 
-Example use with pyplot:
+###############################################################################
+                    Example use with pyplot: y' = f(t, y)
+###############################################################################
 
-For y' = f(t, y) just use scalars instead of numpy arrays
+from numerical_ode import euler_method, rk4_method
+import numpy as np
+import matplotlib.pyplot as plt
 
+# ODE: y' = f(t, y)
+def f(t, y):
+    return 2*y - np.exp(t)
+
+# Solve using euler and rk4
+y_euler = euler_method(f, 0, 3, .1, 1)
+y_rk4 = rk4_method(f, 0, 3, .1, 1)
+
+# Print y(b) to console
+print('euler:', y_euler[y_euler.shape[0]-1])
+print('rk4:', y_rk4[y_rk4.shape[0] - 1])
+
+# Set up y/t-axis
+x = np.linspace(0, 3, y_euler.shape[0])
+
+# Plot the solutions
+plt.plot(x, y_euler, label='Euler', marker='>')
+plt.plot(x, y_rk4, label='RK4')
+
+plt.legend()
+plt.show()
+    
+###############################################################################
+                    Example use with pyplot: 3D System
+###############################################################################
+
+# import numpy to use its arrays
+import numpy as np
+# import rk4_method_m for solving matrix-vector DEs with RK4
+from numerical_ode import rk4_method_m
+# matplotlib for plotting
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+""" 
+    Functions should take 2 arguments (t, y) where t is a scalar and y can be a
+    a vector. For this example, we have the Lorenz system,
+    
+    | y0 |'   | 10 y1 - 10 y0      |
+    | y1 |  = | 24 y0 - y0*y2 - y1 |
+    | y2 |    | y0*y1 - 8/3 y2     |
+    
+"""
 def f(t, y):
     return np.array([
-        y[0] + ... ,
-        y[0] + 2*y[1] + ... ,
-        ...
-        y[m-1] + ...
+        10*(y[1] - y[0]),
+        y[0]*(24 - y[2]) - y[1],
+        y[0]*y[1] - 8*y[2]/3.0
+    ])
+ 
+# Initial value
+y_0 = np.array([
+        1,
+        1,
+        1
     ])
 
-y0 = np.array([
-    1,
-    2,
-    ...
-    m
-])
-
+# t in [0, 70]
 a = 0
-b = 1
-
+b = 70
+ 
 h = 0.01
+ 
+result = rk4_method_m(f, a, b, h, y_0)
 
-result = rk4_method_m(f, a, b, h, y0)
+# Get x, y, z solutions 
 y1 = result[:, 0]
 y2 = result[:, 1]
-...
+y3 = result[:, 2]
+ 
+fig = plt.figure()
+fig.add_subplot(111, projection='3d')
+ 
+plt.plot(y1, y2, y3, linestyle='--')
+plt.show()
 
-Then use pyplot to plot, if solving a scalar ODE, use
-linspace() to create t-array for plotting with length
-result.shape[0].
 
 @author: Evan Burton
 '''
