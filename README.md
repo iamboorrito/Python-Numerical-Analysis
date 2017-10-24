@@ -86,6 +86,15 @@ plt.show()
 ```
 
 # Example: Y' = f(t, Y)
+
+Want to solve
+
+    <code>
+    | y<sub>0</sub> |'   | 10 y<sub>1</sub> - 10 y<sub>0</sub>      |
+    | y<sub>1</sub> |  = | 24 y<sub>0</sub> - y<sub>0</sub>*y<sub>2</sub> - y<sub>1</sub> |
+    | y<sub>2</sub> |    | y<sub>0</sub>*y<sub>1</sub> - 8/3 y<sub>2</sub>     |
+    </code>
+
 ```python
 # import numpy to use its arrays
 import numpy as np
@@ -98,11 +107,11 @@ from mpl_toolkits.mplot3d import Axes3D
 """ 
     Functions should take 2 arguments (t, y) where t is a scalar and y can be a
     a vector. For this example, we have the Lorenz system,
-    <code>
-    | y<sub>0</sub> |'   | 10 y<sub>1</sub> - 10 y<sub>0</sub>      |
-    | y<sub>1</sub> |  = | 24 y<sub>0</sub> - y<sub>0</sub>*y<sub>2</sub> - y<sub>1</sub> |
-    | y<sub>2</sub> |    | y<sub>0</sub>*y<sub>1</sub> - 8/3 y<sub>2</sub>     |
-    </code>
+    
+    | y0 |'   | 10 y1 - 10 y0     |
+    | y1 |  = | 24 y0 - y0*y2 - y1|
+    | y2 |    | y0*y1 - 8/3 y2    |
+    
 """
 def f(t, y):
     return np.array([
