@@ -98,11 +98,11 @@ from mpl_toolkits.mplot3d import Axes3D
 """ 
     Functions should take 2 arguments (t, y) where t is a scalar and y can be a
     a vector. For this example, we have the Lorenz system,
-    
+    <code>
     | y<sub>0</sub> |'   | 10 y<sub>1</sub> - 10 y<sub>0</sub>      |
     | y<sub>1</sub> |  = | 24 y<sub>0</sub> - y<sub>0</sub>*y<sub>2</sub> - y<sub>1</sub> |
     | y<sub>2</sub> |    | y<sub>0</sub>*y<sub>1</sub> - 8/3 y<sub>2</sub>     |
-    
+    </code>
 """
 def f(t, y):
     return np.array([
