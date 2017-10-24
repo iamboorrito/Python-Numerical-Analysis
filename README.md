@@ -57,28 +57,30 @@ Each function that is just euler(...), midpoint(...), rk4(...) only
     
 # Example 1: y' = f(t, y)
 
+```python
 from numerical_ode import euler_method, rk4_method
 import numpy as np
 import matplotlib.pyplot as plt
 
-\# ODE: y' = f(t, y)
+# ODE: y' = f(t, y)
 def f(t, y):
     return 2*y - np.exp(t)
 
-\# Solve using euler and rk4
+# Solve using euler and rk4
 y_euler = euler_method(f, 0, 3, .1, 1)
 y_rk4 = rk4_method(f, 0, 3, .1, 1)
 
-\# Print y(b) to console
+# Print y(b) to console
 print('euler:', y_euler[y_euler.shape[0]-1])
 print('rk4:', y_rk4[y_rk4.shape[0] - 1])
 
-\# Set up y/t-axis
+# Set up y/t-axis
 x = np.linspace(0, 3, y_euler.shape[0])
 
-\# Plot the solutions
+# Plot the solutions
 plt.plot(x, y_euler, label='Euler', marker='>')
 plt.plot(x, y_rk4, label='RK4')
 
 plt.legend()
 plt.show()
+```
