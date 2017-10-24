@@ -55,7 +55,7 @@ Therefore,
 Each function that is just euler(...), midpoint(...), rk4(...) only 
     returns the final value y(b) if solving on the interval [a, b]
     
-# Example 1: y' = f(t, y)
+# Example: y' = f(t, y)
 
 ```python
 from numerical_ode import euler_method, rk4_method
@@ -82,5 +82,58 @@ plt.plot(x, y_euler, label='Euler', marker='>')
 plt.plot(x, y_rk4, label='RK4')
 
 plt.legend()
+plt.show()
+```
+
+# Example: Y' = f(t, Y)
+```python
+# import numpy to use its arrays
+import numpy as np
+# import rk4_method_m for solving matrix-vector DEs with RK4
+from numerical_ode import rk4_method_m
+# matplotlib for plotting
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+""" 
+    Functions should take 2 arguments (t, y) where t is a scalar and y can be a
+    a vector. For this example, we have the Lorenz system,
+    
+    | y0 |'   | 10 y1 - 10 y0      |
+    | y1 |  = | 24 y0 - y0*y2 - y1 |
+    | y2 |    | y0*y1 - 8/3 y2     |
+    
+"""
+def f(t, y):
+    return np.array([
+        10*(y[1] - y[0]),
+        y[0]*(24 - y[2]) - y[1],
+        y[0]*y[1] - 8*y[2]/3.0
+    ])
+ 
+# Initial value
+y_0 = np.array([
+        1,
+        1,
+        1
+    ])
+
+# t in [0, 70]
+a = 0
+b = 70
+ 
+h = 0.01
+ 
+result = rk4_method_m(f, a, b, h, y_0)
+
+# Get x, y, z solutions 
+y1 = result[:, 0]
+y2 = result[:, 1]
+y3 = result[:, 2]
+ 
+fig = plt.figure()
+fig.add_subplot(111, projection='3d')
+ 
+plt.plot(y1, y2, y3, linestyle='--')
 plt.show()
 ```
