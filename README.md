@@ -89,11 +89,9 @@ plt.show()
 
 Want to solve
 
-
-     y<sub>0</sub>' =   10 y<sub>1</sub> - 10 y<sub>0</sub>
-     y<sub>1</sub>' = = 24 y<sub>0</sub> - y<sub>0</sub>*y<sub>2</sub> - y<sub>1</sub>
-     y<sub>2</sub>' =   y<sub>0</sub>*y<sub>1</sub> - 8/3 y<sub>2</sub>
-
+    | y~0~ |'   | 10 y~1~ - 10 y~0~     |
+    | y~1~ |  = | 24 y~0~ - y~0~*y~2~ - y~1~|
+    | y~2~ |    | y~0~*y~1~ - 8/3 y~2~    |
 
 ```python
 # import numpy to use its arrays
