@@ -89,9 +89,7 @@ plt.show()
 
 Want to solve
 
-    | y~0~ |'   | 10 y~1~ - 10 y~0~     |
-    | y~1~ |  = | 24 y~0~ - y~0~*y~2~ - y~1~|
-    | y~2~ |    | y~0~*y~1~ - 8/3 y~2~    |
+![Lorenz System](Lorenz.gif)
 
 ```python
 # import numpy to use its arrays
