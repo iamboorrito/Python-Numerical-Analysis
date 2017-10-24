@@ -89,7 +89,7 @@ plt.show()
 
 Want to solve
 
-![Lorenz System](Lorenz.gif)
+![Lorenz System](Lorenz_System.gif)
 
 ```python
 # import numpy to use its arrays
