@@ -89,11 +89,11 @@ plt.show()
 
 Want to solve
 
-    <code>
+
     | y<sub>0</sub> |'   | 10 y<sub>1</sub> - 10 y<sub>0</sub>      |
     | y<sub>1</sub> |  = | 24 y<sub>0</sub> - y<sub>0</sub>*y<sub>2</sub> - y<sub>1</sub> |
     | y<sub>2</sub> |    | y<sub>0</sub>*y<sub>1</sub> - 8/3 y<sub>2</sub>     |
-    </code>
+
 
 ```python
 # import numpy to use its arrays
